@@ -17,9 +17,4 @@ public class EraioExchangeRateLoader implements ExchangeRateLoader{
     public ExchangeRate load(Currency currencyFrom, Currency currencyTo){
         return null;
     }
-
-    @Override
-    public ExchangeRate load(Currency currencyFrom, Currency currencyTo, LocalDate date){
-        return null;
-    }
 }
