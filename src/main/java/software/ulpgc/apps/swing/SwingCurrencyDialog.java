@@ -4,6 +4,7 @@ import software.ulpgc.model.Currency;
 import software.ulpgc.view.CurrencyDialog;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class SwingCurrencyDialog extends JPanel implements CurrencyDialog {
@@ -17,6 +18,8 @@ public class SwingCurrencyDialog extends JPanel implements CurrencyDialog {
 
     private JComboBox<Currency> selector() {
         JComboBox<Currency> comboBox = new JComboBox<>();
+        comboBox.setOpaque(true);
+        comboBox.setBackground(Color.WHITE);
         for (Currency currency : currencies)
             comboBox.addItem(currency);
         return comboBox;

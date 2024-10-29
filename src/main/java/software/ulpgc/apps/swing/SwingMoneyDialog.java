@@ -14,11 +14,13 @@ public class SwingMoneyDialog extends JPanel implements MoneyDialog {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         this.add(this.amountField = amountField());
         this.add(this.currencyDialog = currencyDialog);
+
+        this.setBackground(Color.WHITE);
     }
 
     private JTextField amountField() {
         JTextField textField = new JTextField();
-        textField.setColumns(8);
+        textField.setColumns(12);
         return textField;
     }
 

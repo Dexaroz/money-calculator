@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
-        this.getContentPane().setBackground(new Color(255,255,255));
+        this.getContentPane().setBackground(Color.WHITE);
 
         JPanel toolbar = (JPanel) toolbar();
         toolbar.setOpaque(false);
@@ -43,9 +43,21 @@ public class MainFrame extends JFrame {
 
     private Component compositeDialog() {
         JPanel panel = new JPanel();
+
+        //panel.setOpaque(true);
+        //panel.setBackground(Color.WHITE);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panel.add(moneyDialog = new SwingMoneyDialog(new SwingCurrencyDialog(currencies)));
-        panel.add(currencyDialog = new SwingCurrencyDialog(currencies));
+
+
+        SwingMoneyDialog moneyDialog = new SwingMoneyDialog(new SwingCurrencyDialog(currencies));
+        moneyDialog.setOpaque(true);
+        moneyDialog.setBackground(Color.WHITE);
+        panel.add(moneyDialog);
+
+        SwingCurrencyDialog currencyDialog = new SwingCurrencyDialog(currencies);
+        currencyDialog.setOpaque(true);
+        currencyDialog.setBackground(Color.WHITE);
+        panel.add(currencyDialog);
         return panel;
     }
 
@@ -53,7 +65,7 @@ public class MainFrame extends JFrame {
         commands.put(key, value);
     }
 
-    private Component topMenu(){
+    private Component topMenu() {
         return new SwingTopMenu("Currency Converter", getClass().getResource("/logo.png"));
     }
 
