@@ -1,6 +1,5 @@
 package software.ulpgc.apps.swing;
 
-import org.w3c.dom.ls.LSOutput;
 import software.ulpgc.control.Command;
 import software.ulpgc.model.Currency;
 import software.ulpgc.view.CurrencyDialog;
@@ -10,9 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
