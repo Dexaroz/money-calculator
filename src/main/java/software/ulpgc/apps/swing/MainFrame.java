@@ -27,12 +27,14 @@ public class MainFrame extends JFrame {
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
-
-        this.getContentPane().setBackground(new Color(2, 36, 92));
+        this.getContentPane().setBackground(new Color(255,255,255));
 
         JPanel toolbar = (JPanel) toolbar();
         toolbar.setOpaque(false);
         this.add(toolbar, BorderLayout.SOUTH);
+
+        JPanel topMenu = (JPanel) topMenu();
+        this.add(topMenu, BorderLayout.NORTH);
 
         JPanel compositeDialog = (JPanel) compositeDialog();
         compositeDialog.setOpaque(false);
@@ -49,6 +51,10 @@ public class MainFrame extends JFrame {
 
     public void put(String key, Command value) {
         commands.put(key, value);
+    }
+
+    private Component topMenu(){
+        return new SwingTopMenu("Currency Converter", getClass().getResource("/logo.png"));
     }
 
     private Component toolbar() {
