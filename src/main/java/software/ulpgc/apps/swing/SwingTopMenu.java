@@ -61,7 +61,7 @@ public class SwingTopMenu extends JPanel {
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
-        button.setForeground(Color.BLACK);
+        button.setForeground(Color.GREEN);
         return button;
     }
 }
