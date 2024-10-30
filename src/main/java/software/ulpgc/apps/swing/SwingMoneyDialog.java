@@ -22,16 +22,20 @@ public class SwingMoneyDialog extends JPanel implements MoneyDialog {
     private JTextField amountField() {
         JTextField textField = new JTextField(15);
 
-        textField.setBorder(new SwingRoundedBorder(15));
-        textField.setPreferredSize(new Dimension(150, 25));
-        textField.setFont(new Font("Arial", Font.PLAIN, 9));
-        textField.setOpaque(true);
+        textField.setFont(new Font("Arial", Font.PLAIN, 12));
+        textField.setForeground(Color.WHITE);
         textField.setBackground(new Color(44, 44, 46));
+        textField.setCaretColor(Color.WHITE);
+        textField.setBorder(new SwingRoundedBorder(1));
+
+        textField.setEnabled(true);
+        textField.setEditable(true);
+
 
         return textField;
     }
 
-    @Override
+        @Override
     public Money get() {
         return new Money(Double.parseDouble(amountField.getText()), currencyDialog.get());
     }

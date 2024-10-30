@@ -36,9 +36,8 @@ public class MainFrame extends JFrame {
         contentPanel.setLayout(new BorderLayout());
         contentPanel.setBackground(new Color(17, 21, 24));
         this.add(contentPanel, BorderLayout.CENTER);
-        this.showContent(setUpCurrency());
+        this.showContent(createCurrencyContent());
 
-        setUpCurrency();
         setUpMenuCommands();
     }
 
@@ -47,12 +46,12 @@ public class MainFrame extends JFrame {
     }
 
     public void setUpMenuCommands(){
-        topMenuComponent.getHorizontalMenu().setButtonAction("Converter", e -> executeCommand("converter"));
+        topMenuComponent.getHorizontalMenu().setButtonAction("Converter", e -> showContent(createCurrencyContent()));
         topMenuComponent.getHorizontalMenu().setButtonAction("History", e -> executeCommand("history"));
         topMenuComponent.getHorizontalMenu().setButtonAction("Favorities", e -> executeCommand("favorities"));
     }
 
-    public SwingCurrencyContent setUpCurrency(){
+    public SwingCurrencyContent createCurrencyContent(){
         SwingCurrencyContent currencyContent = new SwingCurrencyContent(currencies);
         CalculateCommand calculateCommand = new CalculateCommand(
                 currencyContent.moneyDialog(),
@@ -62,6 +61,7 @@ public class MainFrame extends JFrame {
         );
         commands.put("calculate", calculateCommand);
         currencyContent.setButtonAction("Calculate", e -> executeCommand("calculate"));
+
         return currencyContent;
     }
 
