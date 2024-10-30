@@ -1,13 +1,13 @@
 package software.ulpgc.apps.swing;
 
-import software.ulpgc.view.TopLogoName;
+import software.ulpgc.view.VisualComponent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.net.URL;
 
-public class SwingTopLogoName extends JPanel implements TopLogoName {
+public class SwingTopLogoName extends JPanel implements VisualComponent {
 
     public SwingTopLogoName(String title, URL imageUrl) {
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

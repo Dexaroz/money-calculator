@@ -1,14 +1,14 @@
 package software.ulpgc.apps.swing;
 
+import software.ulpgc.apps.mock.MockExchangeRateLoader;
+import software.ulpgc.apps.mock.MockMoneyDisplay;
+import software.ulpgc.control.CalculateCommand;
 import software.ulpgc.control.Command;
 import software.ulpgc.model.Currency;
-import software.ulpgc.view.CurrencyDialog;
-import software.ulpgc.view.MoneyDialog;
+import software.ulpgc.view.VisualComponent;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +16,8 @@ import java.util.Map;
 public class MainFrame extends JFrame {
     private final Map<String, Command> commands;
     private final List<Currency> currencies;
-    private SwingMoneyDialog moneyDialog;
-    private SwingCurrencyDialog currencyDialog;
+    private SwingTopMenuComponent topMenuComponent;
+    private JPanel contentPanel;
 
     public MainFrame(List<Currency> currencies) throws HeadlessException {
         this.currencies = currencies;
@@ -28,68 +28,58 @@ public class MainFrame extends JFrame {
         this.setMinimumSize(new Dimension(800,600));
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
-        this.getContentPane().setBackground(new Color(17, 21, 24));
 
-        JPanel toolbar = (JPanel) toolbar();
-        toolbar.setOpaque(false);
-        this.add(toolbar, BorderLayout.SOUTH);
+        topMenuComponent = new SwingTopMenuComponent("Currency", getClass().getResource("/logo.png"));
+        this.add((JPanel) topMenuComponent.getComponent(), BorderLayout.NORTH);
 
-        this.add(topMenu(), BorderLayout.NORTH);
+        this.contentPanel = new JPanel();
+        contentPanel.setLayout(new BorderLayout());
+        contentPanel.setBackground(new Color(17, 21, 24));
+        this.add(contentPanel, BorderLayout.CENTER);
+        this.showContent(setUpCurrency());
 
-        JPanel compositeDialog = (JPanel) compositeDialog();
-        compositeDialog.setOpaque(false);
-        this.add(compositeDialog, BorderLayout.CENTER);
-    }
-
-    private Component compositeDialog() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-
-        SwingMoneyDialog moneyDialog = new SwingMoneyDialog(new SwingCurrencyDialog(currencies));
-        moneyDialog.setOpaque(true);
-        moneyDialog.setBackground(new Color(17, 21, 24));
-        panel.add(moneyDialog);
-
-        SwingCurrencyDialog currencyDialog = new SwingCurrencyDialog(currencies);
-        currencyDialog.setOpaque(true);
-        currencyDialog.setBackground(new Color(17, 21, 24));
-        panel.add(currencyDialog);
-        return panel;
+        setUpCurrency();
+        setUpMenuCommands();
     }
 
     public void put(String key, Command value) {
         commands.put(key, value);
     }
 
-    private Component topMenu() {
-        SwingTopMenuComponent topMenuComponent = new SwingTopMenuComponent("Currency", getClass().getResource("/logo.png"));
-        return (JPanel) topMenuComponent.getComponent();
+    public void setUpMenuCommands(){
+        topMenuComponent.getHorizontalMenu().setButtonAction("Converter", e -> executeCommand("converter"));
+        topMenuComponent.getHorizontalMenu().setButtonAction("History", e -> executeCommand("history"));
+        topMenuComponent.getHorizontalMenu().setButtonAction("Favorities", e -> executeCommand("favorities"));
     }
 
-    private Component toolbar() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(button("calculate"));
-        return panel;
+    public SwingCurrencyContent setUpCurrency(){
+        SwingCurrencyContent currencyContent = new SwingCurrencyContent(currencies);
+        CalculateCommand calculateCommand = new CalculateCommand(
+                currencyContent.moneyDialog(),
+                currencyContent.currencyDialog(),
+                new MockExchangeRateLoader(),
+                new MockMoneyDisplay()
+        );
+        commands.put("calculate", calculateCommand);
+        currencyContent.setButtonAction("Calculate", e -> executeCommand("calculate"));
+        return currencyContent;
     }
 
-    private Component button(String name) {
-        JButton button = new JButton(name);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                commands.get(name).execute();
-            }
-        });
-        return button;
+    public void executeCommand(String commandKey){
+        Command command = commands.get(commandKey);
+        if (command != null){
+            command.execute();
+        }
     }
 
-    public MoneyDialog moneyDialog() {
-        return moneyDialog;
+    public List<Currency> getCurrencies(){
+        return currencies;
     }
 
-    public CurrencyDialog currencyDialog() {
-        return currencyDialog;
+    public void showContent(Object visualComponent){
+        contentPanel.removeAll();
+        contentPanel.add((JPanel) visualComponent, BorderLayout.CENTER);
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
 }
