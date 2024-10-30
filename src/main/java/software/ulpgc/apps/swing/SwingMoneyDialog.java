@@ -15,12 +15,19 @@ public class SwingMoneyDialog extends JPanel implements MoneyDialog {
         this.add(this.amountField = amountField());
         this.add(this.currencyDialog = currencyDialog);
 
-        this.setBackground(Color.WHITE);
+        currencyDialog.setOpaque(false);
+        amountField.setOpaque(false);
     }
 
     private JTextField amountField() {
-        JTextField textField = new JTextField();
-        textField.setColumns(12);
+        JTextField textField = new JTextField(15);
+
+        textField.setBorder(new SwingRoundedBorder(15));
+        textField.setPreferredSize(new Dimension(150, 25));
+        textField.setFont(new Font("Arial", Font.PLAIN, 9));
+        textField.setOpaque(true);
+        textField.setBackground(new Color(44, 44, 46));
+
         return textField;
     }
 

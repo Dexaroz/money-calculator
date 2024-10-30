@@ -25,16 +25,16 @@ public class MainFrame extends JFrame {
         this.setTitle("MoneyCalculator");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 600);
+        this.setMinimumSize(new Dimension(800,600));
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
-        this.getContentPane().setBackground(Color.WHITE);
+        this.getContentPane().setBackground(new Color(17, 21, 24));
 
         JPanel toolbar = (JPanel) toolbar();
         toolbar.setOpaque(false);
         this.add(toolbar, BorderLayout.SOUTH);
 
-        JPanel topMenu = (JPanel) topMenu();
-        this.add(topMenu, BorderLayout.NORTH);
+        this.add(topMenu(), BorderLayout.NORTH);
 
         JPanel compositeDialog = (JPanel) compositeDialog();
         compositeDialog.setOpaque(false);
@@ -43,20 +43,17 @@ public class MainFrame extends JFrame {
 
     private Component compositeDialog() {
         JPanel panel = new JPanel();
-
-        //panel.setOpaque(true);
-        //panel.setBackground(Color.WHITE);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 
         SwingMoneyDialog moneyDialog = new SwingMoneyDialog(new SwingCurrencyDialog(currencies));
         moneyDialog.setOpaque(true);
-        moneyDialog.setBackground(Color.WHITE);
+        moneyDialog.setBackground(new Color(17, 21, 24));
         panel.add(moneyDialog);
 
         SwingCurrencyDialog currencyDialog = new SwingCurrencyDialog(currencies);
         currencyDialog.setOpaque(true);
-        currencyDialog.setBackground(Color.WHITE);
+        currencyDialog.setBackground(new Color(17, 21, 24));
         panel.add(currencyDialog);
         return panel;
     }
@@ -66,7 +63,8 @@ public class MainFrame extends JFrame {
     }
 
     private Component topMenu() {
-        return new SwingTopMenu("Currency Converter", getClass().getResource("/logo.png"));
+        SwingTopMenuComponent topMenuComponent = new SwingTopMenuComponent("Currency", getClass().getResource("/logo.png"));
+        return (JPanel) topMenuComponent.getComponent();
     }
 
     private Component toolbar() {
@@ -83,7 +81,6 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 commands.get(name).execute();
             }
-
         });
         return button;
     }
