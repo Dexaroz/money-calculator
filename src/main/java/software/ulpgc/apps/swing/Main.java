@@ -1,8 +1,6 @@
 package software.ulpgc.apps.swing;
 
 import software.ulpgc.apps.mock.MockCurrencyLoader;
-import software.ulpgc.apps.mock.MockExchangeRateLoader;
-import software.ulpgc.apps.mock.MockMoneyDisplay;
 import software.ulpgc.control.*;
 
 public class Main {

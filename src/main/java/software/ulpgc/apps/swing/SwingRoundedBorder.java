@@ -18,7 +18,7 @@ public class SwingRoundedBorder implements Border {
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         g.setColor(new Color(44, 44, 46));
-        g.drawRoundRect(x, y, width - 1, height - 1, radiusBorder, radiusBorder);
+        g.drawRoundRect(x, y, width - 1, height - 1, radiusBorder+20, radiusBorder+20);
     }
 
     @Override

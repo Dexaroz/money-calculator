@@ -5,7 +5,6 @@ import software.ulpgc.apps.mock.MockMoneyDisplay;
 import software.ulpgc.control.CalculateCommand;
 import software.ulpgc.control.Command;
 import software.ulpgc.model.Currency;
-import software.ulpgc.view.VisualComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +15,8 @@ import java.util.Map;
 public class MainFrame extends JFrame {
     private final Map<String, Command> commands;
     private final List<Currency> currencies;
-    private SwingTopMenuComponent topMenuComponent;
-    private JPanel contentPanel;
+    private final SwingTopMenuComponent topMenuComponent;
+    private final JPanel contentPanel;
 
     public MainFrame(List<Currency> currencies) throws HeadlessException {
         this.currencies = currencies;

@@ -15,15 +15,13 @@ public class ExchangeRecord {
         return history;
     }
 
-    public boolean addExchange(ExchangeRate exchange) {
-        if (history.contains(exchange)) {
-            return false;
+    public void addExchange(ExchangeRate exchange) {
+        if (!history.contains(exchange)) {
+            history.add(exchange);
         }
-
-        return history.add(exchange);
     }
 
-    public boolean removeExchange(ExchangeRate exchange) {
-        return history.remove(exchange);
+    public void removeExchange(ExchangeRate exchange) {
+        history.remove(exchange);
     }
 }
