@@ -40,7 +40,6 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         topPanel.add(tittleLabel);
         this.add(topPanel, BorderLayout.NORTH);
 
-
         JPanel toolbar = (JPanel) toolbar();
         toolbar.setOpaque(false);
         this.add(toolbar, BorderLayout.SOUTH);

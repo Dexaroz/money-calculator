@@ -5,23 +5,19 @@ import java.util.List;
 
 public class ExchangeRecord {
 
-    private List<ExchangeRate> history;
+    private final List<ExchangeTransaction> history;
 
     public ExchangeRecord() {
         this.history = new ArrayList<>();
     }
 
-    public List<ExchangeRate> showHistory() {
+    public List<ExchangeTransaction> showHistory() {
         return history;
     }
 
-    public void addExchange(ExchangeRate exchange) {
+    public void addExchangeTransaction(ExchangeTransaction exchange) {
         if (!history.contains(exchange)) {
             history.add(exchange);
         }
-    }
-
-    public void removeExchange(ExchangeRate exchange) {
-        history.remove(exchange);
     }
 }
