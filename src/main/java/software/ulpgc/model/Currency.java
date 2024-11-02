@@ -28,7 +28,7 @@ public class Currency {
 
     @Override
     public String toString() {
-        return String.format("%s - %s", code, name);
+        return String.format("%s - %s - %s", code, name, symbol);
     }
 
     @Override

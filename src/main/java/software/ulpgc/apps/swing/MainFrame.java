@@ -1,5 +1,6 @@
 package software.ulpgc.apps.swing;
 
+import software.ulpgc.apps.fixeraw.FixerExchangeRateLoader;
 import software.ulpgc.apps.mock.MockExchangeRateLoader;
 import software.ulpgc.apps.mock.MockMoneyDisplay;
 import software.ulpgc.control.AddTransactionCommand;
@@ -66,7 +67,7 @@ public class MainFrame extends JFrame {
             CalculateCommand calculateCommand = new CalculateCommand(
                     currencyContent.moneyDialog(),
                     currencyContent.currencyDialog(),
-                    new MockExchangeRateLoader(),
+                    new FixerExchangeRateLoader(),
                     new MockMoneyDisplay()
             );
 

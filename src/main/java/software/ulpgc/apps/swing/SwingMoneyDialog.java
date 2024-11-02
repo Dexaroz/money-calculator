@@ -12,8 +12,10 @@ public class SwingMoneyDialog extends JPanel implements MoneyDialog {
 
     public SwingMoneyDialog(SwingCurrencyDialog currencyDialog) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        this.add(this.amountField = amountField());
-        this.add(this.currencyDialog = currencyDialog);
+        this.amountField = amountField();
+        this.add(amountField);
+        this.currencyDialog = currencyDialog;
+        this.add(this.currencyDialog);
 
         currencyDialog.setOpaque(false);
         amountField.setOpaque(false);
@@ -31,12 +33,22 @@ public class SwingMoneyDialog extends JPanel implements MoneyDialog {
         textField.setEnabled(true);
         textField.setEditable(true);
 
-
         return textField;
     }
 
-        @Override
+    @Override
     public Money get() {
-        return new Money(Double.parseDouble(amountField.getText()), currencyDialog.get());
+            String amountText = amountField.getText().trim();
+            if (amountText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Amount field cannot be empty", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+
+            try {
+                return new Money(Double.parseDouble(amountText), currencyDialog.get());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Invalid number format", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
     }
 }

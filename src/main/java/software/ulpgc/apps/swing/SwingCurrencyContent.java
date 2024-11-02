@@ -4,6 +4,7 @@ import software.ulpgc.control.CalculateCommand;
 import software.ulpgc.model.Currency;
 import software.ulpgc.view.CurrencyDialog;
 import software.ulpgc.view.MoneyDialog;
+import software.ulpgc.view.MoneyDisplay;
 import software.ulpgc.view.VisualComponent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,9 +27,6 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         this.setLayout(new BorderLayout());
         this.setBackground(new Color(17, 21, 24));
 
-        this.moneyDialog = new SwingMoneyDialog(new SwingCurrencyDialog(currencies));
-        this.currencyDialog = new SwingCurrencyDialog(currencies);
-
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         topPanel.setOpaque(false);
         topPanel.setBorder(new EmptyBorder(20,0,0,0));
@@ -36,16 +34,22 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         JLabel tittleLabel = new JLabel("Currency Converter");
         tittleLabel.setFont(new Font("Arial Black", Font.BOLD, 20));
         tittleLabel.setForeground(Color.WHITE);
-
         topPanel.add(tittleLabel);
         this.add(topPanel, BorderLayout.NORTH);
 
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.setOpaque(false);
+        bottomPanel.setBorder(new EmptyBorder(0, 50, 50, 50));
+        this.add(bottomPanel, BorderLayout.SOUTH);
+
         JPanel toolbar = (JPanel) toolbar();
         toolbar.setOpaque(false);
-        this.add(toolbar, BorderLayout.SOUTH);
+        bottomPanel.add(toolbar);
 
-        JPanel compositeDialog = (JPanel) compositeDialog();
+        JPanel compositeDialog = (JPanel) compositeDialog(this.moneyDialog = new SwingMoneyDialog(new SwingCurrencyDialog(currencies)), this.currencyDialog = new SwingCurrencyDialog(currencies));
         compositeDialog.setOpaque(false);
+        compositeDialog.setBorder(new EmptyBorder(20,100,0,0));
         this.add(compositeDialog, BorderLayout.CENTER);
     }
 
@@ -74,19 +78,21 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         return button;
     }
 
-    private Component compositeDialog() {
+    private Component compositeDialog(SwingMoneyDialog moneyDialog, SwingCurrencyDialog currencyDialog) {
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panel.setLayout(new BorderLayout());
 
-        SwingMoneyDialog moneyDialog = new SwingMoneyDialog(new SwingCurrencyDialog(currencies));
         moneyDialog.setOpaque(true);
         moneyDialog.setBackground(new Color(17, 21, 24));
-        panel.add(moneyDialog);
+        panel.add(moneyDialog, BorderLayout.WEST);
 
-        SwingCurrencyDialog currencyDialog = new SwingCurrencyDialog(currencies);
         currencyDialog.setOpaque(true);
         currencyDialog.setBackground(new Color(17, 21, 24));
-        panel.add(currencyDialog);
+        JPanel topPanel = new JPanel();
+        topPanel.setBorder(new EmptyBorder(0,1,0,0));
+        topPanel.setOpaque(false);
+        topPanel.add(currencyDialog);
+        panel.add(topPanel, BorderLayout.CENTER);
         return panel;
     }
 
