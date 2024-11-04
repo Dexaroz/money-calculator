@@ -12,6 +12,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MainFrame extends JFrame {
     private final Map<String, Command> commands;
@@ -34,17 +35,33 @@ public class MainFrame extends JFrame {
         this.setSize(800, 600);
         this.setMinimumSize(new Dimension(800,600));
         this.setLocationRelativeTo(null);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
 
-        topMenuComponent = new SwingTopMenuComponent("Currency", getClass().getResource("/logo.png"));
-        this.add((JPanel) topMenuComponent.getComponent(), BorderLayout.NORTH);
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-        this.contentPanel = new JPanel();
-        contentPanel.setBackground(new Color(17, 21, 24));
-        this.add(contentPanel, BorderLayout.CENTER);
+        this.add(getTopMenuLabel(gridBagConstraints, this.topMenuComponent = new SwingTopMenuComponent("Currency",  getClass().getResource("/logo.png"))), gridBagConstraints);
+        this.add(getContentPanel(gridBagConstraints, this.contentPanel = new JPanel()), gridBagConstraints);
 
         this.showContent(getCurrencyContent());
         setUpMenuCommands();
+    }
+
+    private Component getTopMenuLabel(GridBagConstraints gridBagConstraints, SwingTopMenuComponent topMenuComponent){
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+
+        return topMenuComponent;
+    }
+
+    private Component getContentPanel(GridBagConstraints gridBagConstraints, JPanel contentPanel){
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        contentPanel.setBackground(new Color(17, 21, 24));
+
+        return contentPanel;
     }
 
     public void put(String key, Command value) {

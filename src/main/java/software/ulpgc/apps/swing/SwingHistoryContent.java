@@ -17,18 +17,9 @@ public class SwingHistoryContent extends JPanel implements VisualComponent {
         this.exchangeRecord = exchangeRecord;
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        GridBagConstraints tableBagConstraints = new GridBagConstraints();
-        tableBagConstraints.gridx = 0;
-        tableBagConstraints.gridy = 1;
-        tableBagConstraints.gridwidth = 2;
-        tableBagConstraints.weightx = 1.0;
-        tableBagConstraints.weighty = 1.0;
-        tableBagConstraints.fill = GridBagConstraints.BOTH;
-        tableBagConstraints.insets = new Insets(10, 10, 10, 10);
-
 
         this.add(getTitlePanel(gridBagConstraints), gridBagConstraints);
-        this.add(getTablePanel(gridBagConstraints), tableBagConstraints);
+        this.add(getTablePanel(gridBagConstraints), gridBagConstraints);
     }
 
     private Component getTitlePanel(GridBagConstraints gridBagConstraints){
