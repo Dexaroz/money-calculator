@@ -1,8 +1,6 @@
 package software.ulpgc.apps.swing;
 
 import software.ulpgc.apps.fixeraw.FixerExchangeRateLoader;
-import software.ulpgc.apps.mock.MockExchangeRateLoader;
-import software.ulpgc.apps.mock.MockMoneyDisplay;
 import software.ulpgc.control.AddTransactionCommand;
 import software.ulpgc.control.CalculateCommand;
 import software.ulpgc.control.Command;
@@ -42,7 +40,6 @@ public class MainFrame extends JFrame {
         this.add((JPanel) topMenuComponent.getComponent(), BorderLayout.NORTH);
 
         this.contentPanel = new JPanel();
-        contentPanel.setLayout(new BorderLayout());
         contentPanel.setBackground(new Color(17, 21, 24));
         this.add(contentPanel, BorderLayout.CENTER);
 
@@ -68,7 +65,7 @@ public class MainFrame extends JFrame {
                     currencyContent.moneyDialog(),
                     currencyContent.currencyDialog(),
                     new FixerExchangeRateLoader(),
-                    new MockMoneyDisplay()
+                    currencyContent.moneyDisplay()
             );
 
             AddTransactionCommand addTransactionCommand = new AddTransactionCommand(

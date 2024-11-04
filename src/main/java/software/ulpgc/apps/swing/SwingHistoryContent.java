@@ -5,26 +5,65 @@ import software.ulpgc.model.ExchangeTransaction;
 import software.ulpgc.view.VisualComponent;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class SwingHistoryContent extends JPanel implements VisualComponent {
 
+    private final ExchangeRecord exchangeRecord;
+
     public SwingHistoryContent(ExchangeRecord exchangeRecord) {
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
         this.setBackground(new Color(17, 21, 24));
+        this.exchangeRecord = exchangeRecord;
 
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        topPanel.setOpaque(false);
-        topPanel.setBorder(new EmptyBorder(20,0,0,0));
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        GridBagConstraints tableBagConstraints = new GridBagConstraints();
+        tableBagConstraints.gridx = 0;
+        tableBagConstraints.gridy = 1;
+        tableBagConstraints.gridwidth = 2;
+        tableBagConstraints.weightx = 1.0;
+        tableBagConstraints.weighty = 1.0;
+        tableBagConstraints.fill = GridBagConstraints.BOTH;
+        tableBagConstraints.insets = new Insets(10, 10, 10, 10);
 
+
+        this.add(getTitlePanel(gridBagConstraints), gridBagConstraints);
+        this.add(getTablePanel(gridBagConstraints), tableBagConstraints);
+    }
+
+    private Component getTitlePanel(GridBagConstraints gridBagConstraints){
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = GridBagConstraints.NORTH;
+        gridBagConstraints.insets = new Insets(5,0,40,0);
         JLabel tittleLabel = new JLabel("History");
         tittleLabel.setFont(new Font("Arial Black", Font.BOLD, 20));
         tittleLabel.setForeground(Color.WHITE);
-        topPanel.add(tittleLabel);
-        this.add(topPanel, BorderLayout.NORTH);
 
-        JTable table = getTable(exchangeRecord.showHistory());
+        return tittleLabel;
+    }
+
+    private Component getTablePanel(GridBagConstraints gridBagConstraints){
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new Insets(10, 10, 10, 10);
+
+        JScrollPane scrollPane = new JScrollPane(getTable(exchangeRecord.showHistory()));
+        scrollPane.setPreferredSize(new Dimension(650,400));
+        scrollPane.setOpaque(true);
+        scrollPane.getViewport().setBackground(new Color(17, 21, 24));
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+        return scrollPane;
+    }
+
+    private JTable getTable(List<ExchangeTransaction> transactions){
+        JTable table = new SwingExchangeTable(transactions);
         table.setBackground(new Color(30, 30, 30));
         table.setForeground(Color.WHITE);
         table.setGridColor(new Color(60, 60, 60));
@@ -36,15 +75,7 @@ public class SwingHistoryContent extends JPanel implements VisualComponent {
         table.getTableHeader().setBackground(new Color(40, 40, 40));
         table.getTableHeader().setForeground(Color.WHITE);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setOpaque(true);
-        scrollPane.getViewport().setBackground(new Color(17, 21, 24));
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        this.add(scrollPane, BorderLayout.CENTER);
-    }
-
-    private JTable getTable(List<ExchangeTransaction> transactions){
-        return new SwingExchangeTable(transactions);
+        return table;
     }
 
     @Override
