@@ -6,15 +6,15 @@ import software.ulpgc.control.CalculateCommand;
 import software.ulpgc.control.Command;
 import software.ulpgc.model.Currency;
 import software.ulpgc.model.ExchangeRecord;
+import software.ulpgc.view.ContentPanelManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ContentPanelManager {
     private final Map<String, Command> commands;
     private final List<Currency> currencies;
     private final SwingTopMenuComponent topMenuComponent;
@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
     private SwingHistoryContent historyContent;
     private SwingFavoritiesContent favoritiesContent;
 
-    private ExchangeRecord exchangeRecord;
+    private ExchangeRecord exchangeRecord = new ExchangeRecord();
 
 
     public MainFrame(List<Currency> currencies) throws HeadlessException {
@@ -69,53 +69,50 @@ public class MainFrame extends JFrame {
     }
 
     public void setUpMenuCommands(){
-        topMenuComponent.getHorizontalMenu().setButtonAction("Converter", e -> showContent(getCurrencyContent()));
-        topMenuComponent.getHorizontalMenu().setButtonAction("History", e -> showContent(getHistoryContent()));
-        topMenuComponent.getHorizontalMenu().setButtonAction("Favorities", e -> showContent(getFavoritiesContent()));
+        topMenuComponent.addButton("Converter", () -> showContent(getCurrencyContent()));
+        topMenuComponent.addButton("History", () -> showContent(getHistoryContent()));
+        topMenuComponent.addButton("Favorities", () -> showContent(getFavoritiesContent()));
+    }
+
+    private void setUpCurrencyCommands(){
+        CalculateCommand calculateCommand = new CalculateCommand(
+                currencyContent.moneyDialog(),
+                currencyContent.currencyDialog(),
+                new FixerExchangeRateLoader(),
+                currencyContent.moneyDisplay()
+        );
+
+        AddTransactionCommand addTransactionCommand = new AddTransactionCommand(
+                currencyContent.moneyDialog(),
+                currencyContent.currencyDialog(),
+                exchangeRecord
+        );
+        commands.put("addTransactionCommand", addTransactionCommand);
+        commands.put("calculate", calculateCommand);
+
+        currencyContent.setButtonAction("Calculate", e -> {
+            executeCommand("calculate");
+            executeCommand("addTransactionCommand");
+        });
     }
 
     public SwingCurrencyContent getCurrencyContent(){
+        SwingCurrencyContent currencyContent = SwingCurrencyContent.getInstance(currencies);
+
         if (currencyContent == null){
-            this.currencyContent = new SwingCurrencyContent(currencies);
-            this.exchangeRecord = new ExchangeRecord();
-            CalculateCommand calculateCommand = new CalculateCommand(
-                    currencyContent.moneyDialog(),
-                    currencyContent.currencyDialog(),
-                    new FixerExchangeRateLoader(),
-                    currencyContent.moneyDisplay()
-            );
-
-            AddTransactionCommand addTransactionCommand = new AddTransactionCommand(
-                    currencyContent.moneyDialog(),
-                    currencyContent.currencyDialog(),
-                    exchangeRecord
-            );
-            commands.put("addTransactionCommand", addTransactionCommand);
-            commands.put("calculate", calculateCommand);
-
-            currencyContent.setButtonAction("Calculate", e -> {
-                        executeCommand("calculate");
-                        executeCommand("addTransactionCommand");
-            });
+            this.currencyContent = currencyContent;
+            setUpCurrencyCommands();
         }
 
         return currencyContent;
     }
 
     public SwingHistoryContent getHistoryContent(){
-        if (historyContent == null){
-            this.historyContent = new SwingHistoryContent(exchangeRecord);
-        }
-
-        return historyContent;
+        return SwingHistoryContent.getInstance(exchangeRecord);
     }
 
     public SwingFavoritiesContent getFavoritiesContent(){
-        if (favoritiesContent == null){
-            this.favoritiesContent = new SwingFavoritiesContent();
-        }
-
-        return favoritiesContent;
+        return SwingFavoritiesContent.getInstance();
     }
 
     public void executeCommand(String commandKey){
@@ -129,6 +126,7 @@ public class MainFrame extends JFrame {
         return currencies;
     }
 
+    @Override
     public void showContent(Object visualComponent){
         contentPanel.removeAll();
         contentPanel.add((JPanel) visualComponent, BorderLayout.CENTER);

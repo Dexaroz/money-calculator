@@ -1,5 +1,6 @@
 package software.ulpgc.apps.swing;
 
+import software.ulpgc.model.ExchangeRecord;
 import software.ulpgc.view.MoneyDisplay;
 import software.ulpgc.model.Currency;
 import software.ulpgc.view.CurrencyDialog;
@@ -15,13 +16,18 @@ import java.util.Map;
 
 public class SwingCurrencyContent extends JPanel implements VisualComponent {
 
+    private static SwingCurrencyContent instance;
     private final SwingMoneyDialog moneyDialog;
     private final SwingCurrencyDialog currencyDialog;
     private SwingMoneyDisplay moneyDisplay;
     private final List<Currency> currencies;
     private final Map<String, JButton> commandsButton;
 
-    public SwingCurrencyContent(List<Currency> currencies) {
+    public static SwingCurrencyContent getInstance(List<Currency> currencies){
+        return (instance == null) ? instance = new SwingCurrencyContent(currencies) : instance;
+    }
+
+    private SwingCurrencyContent(List<Currency> currencies) {
         this.currencies = currencies;
         this.commandsButton = new HashMap<>();
 
@@ -60,9 +66,16 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         return compositeDialog;
     }
 
+    /*private Component getActionIconsPanel(GridBagConstraints gridBagConstraints){
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
+    }*/
+
     private Component getMoneyDisplayPanel(GridBagConstraints gridBagConstraints){
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = GridBagConstraints.CENTER;
         gridBagConstraints.insets = new Insets(0, 0, 0, 20);
         moneyDisplay = new SwingMoneyDisplay();
@@ -72,7 +85,7 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
 
     private Component getToolbarPanel(GridBagConstraints gridBagConstraints){
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = GridBagConstraints.CENTER;
         gridBagConstraints.insets = new Insets(20, 0, 20, 0);
@@ -142,12 +155,12 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         }
     }
 
+    public MoneyDisplay moneyDisplay() {
+        return moneyDisplay;
+    }
+
     @Override
     public Object getComponent() {
         return this;
-    }
-
-    public MoneyDisplay moneyDisplay() {
-        return moneyDisplay;
     }
 }

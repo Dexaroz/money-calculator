@@ -10,8 +10,13 @@ import java.awt.*;
 public class SwingHistoryContent extends JPanel implements VisualComponent {
 
     private final ExchangeRecord exchangeRecord;
+    private static SwingHistoryContent instance;
 
-    public SwingHistoryContent(ExchangeRecord exchangeRecord) {
+    public static SwingHistoryContent getInstance(ExchangeRecord exchangeRecord){
+        return (instance == null) ? instance = new SwingHistoryContent(exchangeRecord) : instance;
+    }
+
+    private SwingHistoryContent(ExchangeRecord exchangeRecord) {
         this.setLayout(new GridBagLayout());
         this.setBackground(new Color(17, 21, 24));
         this.exchangeRecord = exchangeRecord;
