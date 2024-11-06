@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class SwingHistoryContent extends JPanel implements VisualComponent {
 
+    private static final Color BACKGROUND_COLOR = new Color(17, 21, 24);
+
     private final ExchangeRecord exchangeRecord;
     private static SwingHistoryContent instance;
 
@@ -18,7 +20,7 @@ public class SwingHistoryContent extends JPanel implements VisualComponent {
 
     private SwingHistoryContent(ExchangeRecord exchangeRecord) {
         this.setLayout(new GridBagLayout());
-        this.setBackground(new Color(17, 21, 24));
+        this.setBackground(BACKGROUND_COLOR);
         this.exchangeRecord = exchangeRecord;
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -52,7 +54,7 @@ public class SwingHistoryContent extends JPanel implements VisualComponent {
         JScrollPane scrollPane = new JScrollPane(getTable(exchangeRecord.showHistory()));
         scrollPane.setPreferredSize(new Dimension(650,400));
         scrollPane.setOpaque(true);
-        scrollPane.getViewport().setBackground(new Color(17, 21, 24));
+        scrollPane.getViewport().setBackground(BACKGROUND_COLOR);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         return scrollPane;

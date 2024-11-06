@@ -9,10 +9,9 @@ import java.util.List;
 
 public class SwingExchangeTable extends JTable {
     public SwingExchangeTable(List<ExchangeTransaction> transactions) {
-        super((TableModel) new ExchangeTableModel(transactions));  // Usa un modelo de tabla personalizado
+        super((TableModel) new ExchangeTableModel(transactions));
     }
 
-    // Clase interna para definir el modelo de datos de la tabla
     private static class ExchangeTableModel extends AbstractTableModel {
         private final List<ExchangeTransaction> transactions;
         private final String[] columnNames = {"From", "To", "Amount", "Date"};

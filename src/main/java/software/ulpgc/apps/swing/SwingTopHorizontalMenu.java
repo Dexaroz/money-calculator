@@ -10,8 +10,6 @@ import java.util.Map;
 public class SwingTopHorizontalMenu extends JPanel implements VisualComponent {
 
     private static final Color BACKGROUND_COLOR = new Color(17, 21, 24);
-    private static final Color TEXT_COLOR = new Color(229, 229, 231);
-    private static final Font TITLE_FONT = new Font("Arial Black", Font.BOLD, 15);
 
     private final Map<String, JButton> commandsButton;
 

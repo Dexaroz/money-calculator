@@ -5,6 +5,7 @@ import software.ulpgc.control.AddTransactionCommand;
 import software.ulpgc.control.CalculateCommand;
 import software.ulpgc.control.Command;
 import software.ulpgc.model.Currency;
+import software.ulpgc.model.CurrencyFavoriteRecord;
 import software.ulpgc.model.ExchangeRecord;
 import software.ulpgc.view.ContentPanelManager;
 
@@ -25,6 +26,7 @@ public class MainFrame extends JFrame implements ContentPanelManager {
     private SwingFavoritiesContent favoritiesContent;
 
     private ExchangeRecord exchangeRecord = new ExchangeRecord();
+    private CurrencyFavoriteRecord currencyFavorite = new CurrencyFavoriteRecord();
 
 
     public MainFrame(List<Currency> currencies) throws HeadlessException {
@@ -112,7 +114,7 @@ public class MainFrame extends JFrame implements ContentPanelManager {
     }
 
     public SwingFavoritiesContent getFavoritiesContent(){
-        return SwingFavoritiesContent.getInstance();
+        return SwingFavoritiesContent.getInstance(currencyFavorite);
     }
 
     public void executeCommand(String commandKey){
@@ -136,5 +138,9 @@ public class MainFrame extends JFrame implements ContentPanelManager {
 
     public ExchangeRecord getExchangeRecord(){
         return exchangeRecord;
+    }
+
+    public CurrencyFavoriteRecord getCurrencyFavorite(){
+        return currencyFavorite;
     }
 }

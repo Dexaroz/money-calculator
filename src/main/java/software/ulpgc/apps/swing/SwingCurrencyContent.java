@@ -16,6 +16,8 @@ import java.util.Map;
 
 public class SwingCurrencyContent extends JPanel implements VisualComponent {
 
+    private static final Color BACKGROUND_COLOR = new Color(17, 21, 24);
+
     private static SwingCurrencyContent instance;
     private final SwingMoneyDialog moneyDialog;
     private final SwingCurrencyDialog currencyDialog;
@@ -32,7 +34,7 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         this.commandsButton = new HashMap<>();
 
         this.setLayout(new GridBagLayout());
-        this.setBackground(new Color(17, 21, 24));
+        this.setBackground(BACKGROUND_COLOR);
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
@@ -125,12 +127,10 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        moneyDialog.setOpaque(true);
-        moneyDialog.setBackground(new Color(17, 21, 24));
+        moneyDialog.setOpaque(false);
         panel.add(moneyDialog, BorderLayout.WEST);
 
-        currencyDialog.setOpaque(true);
-        currencyDialog.setBackground(new Color(17, 21, 24));
+        currencyDialog.setOpaque(false);
         JPanel topPanel = new JPanel();
         topPanel.setBorder(new EmptyBorder(0,1,0,0));
         topPanel.setOpaque(false);
