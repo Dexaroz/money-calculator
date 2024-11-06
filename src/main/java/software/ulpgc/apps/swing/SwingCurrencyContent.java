@@ -102,7 +102,9 @@ public class SwingCurrencyContent extends JPanel implements VisualComponent {
         panel.setLayout(new FlowLayout());
 
         JButton calculateButton = (JButton) button("Calculate");
+        JButton favButton = (JButton) button("Fav");
         panel.add(calculateButton);
+        panel.add(favButton);
         return panel;
     }
 

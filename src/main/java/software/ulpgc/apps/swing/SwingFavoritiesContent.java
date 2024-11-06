@@ -54,7 +54,7 @@ public class SwingFavoritiesContent extends JPanel implements VisualComponent {
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.insets = new Insets(10, 10, 10, 10);
 
-        JScrollPane scrollPane = new JScrollPane(getTable(new ArrayList<>(currencyFavorites.showFavorite())));
+        JScrollPane scrollPane = new JScrollPane(getTable(currencyFavorites.showFavorite()));
         scrollPane.setPreferredSize(new Dimension(650,400));
         scrollPane.setOpaque(true);
         scrollPane.getViewport().setBackground(BACKGROUND_COLOR);

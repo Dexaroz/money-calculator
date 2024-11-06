@@ -1,6 +1,7 @@
 package software.ulpgc.apps.swing;
 
 import software.ulpgc.apps.fixeraw.FixerExchangeRateLoader;
+import software.ulpgc.control.AddFavoriteCurrencyCommand;
 import software.ulpgc.control.AddTransactionCommand;
 import software.ulpgc.control.CalculateCommand;
 import software.ulpgc.control.Command;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MainFrame extends JFrame implements ContentPanelManager {
+    private static final Color BACKGROUND_COLOR = new Color(17, 21, 24);
+
     private final Map<String, Command> commands;
     private final List<Currency> currencies;
     private final SwingTopMenuComponent topMenuComponent;
@@ -61,7 +64,7 @@ public class MainFrame extends JFrame implements ContentPanelManager {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.fill = GridBagConstraints.BOTH;
-        contentPanel.setBackground(new Color(17, 21, 24));
+        contentPanel.setBackground(BACKGROUND_COLOR);
 
         return contentPanel;
     }
@@ -89,21 +92,34 @@ public class MainFrame extends JFrame implements ContentPanelManager {
                 currencyContent.currencyDialog(),
                 exchangeRecord
         );
-        commands.put("addTransactionCommand", addTransactionCommand);
+
+        AddFavoriteCurrencyCommand addFavoriteCurrencyCommand = new AddFavoriteCurrencyCommand(
+                currencyContent.currencyDialog(),
+                currencyFavorite
+        );
+
         commands.put("calculate", calculateCommand);
+        commands.put("addTransactionCommand", addTransactionCommand);
+        commands.put("addFavoriteCurrencyCommand", addFavoriteCurrencyCommand);
+
 
         currencyContent.setButtonAction("Calculate", e -> {
             executeCommand("calculate");
             executeCommand("addTransactionCommand");
         });
+
+        currencyContent.setButtonAction("Fav", e -> {
+            executeCommand("addFavoriteCurrencyCommand");
+        });
     }
 
-    public SwingCurrencyContent getCurrencyContent(){
-        SwingCurrencyContent currencyContent = SwingCurrencyContent.getInstance(currencies);
+    public SwingCurrencyContent getCurrencyContent() {
+        if (currencyContent == null) {
 
-        if (currencyContent == null){
-            this.currencyContent = currencyContent;
-            setUpCurrencyCommands();
+            currencyContent = SwingCurrencyContent.getInstance(currencies);
+            if (currencyContent != null) {
+                setUpCurrencyCommands();
+            }
         }
 
         return currencyContent;

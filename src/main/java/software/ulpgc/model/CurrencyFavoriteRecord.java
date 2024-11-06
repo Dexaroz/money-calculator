@@ -1,22 +1,24 @@
 package software.ulpgc.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CurrencyFavoriteRecord {
 
-    private final Set<Currency> favoriteCurrencies;
+    private final List<Currency> favoriteCurrencies;
 
     public CurrencyFavoriteRecord() {
-        this.favoriteCurrencies = new HashSet<>();
+        this.favoriteCurrencies = new ArrayList<>();
     }
 
-    public Set<Currency> showFavorite(){
+    public List<Currency> showFavorite(){
         return favoriteCurrencies;
     }
 
     public void addFavoriteCurrency(Currency currency){
-        favoriteCurrencies.add(currency);
+        if (!favoriteCurrencies.contains(currency)) {
+            favoriteCurrencies.add(currency);
+        }
     }
 
     public void removeFavoriteCurrency(Currency currency){
