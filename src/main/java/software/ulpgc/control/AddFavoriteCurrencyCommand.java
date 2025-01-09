@@ -14,8 +14,6 @@ public class AddFavoriteCurrencyCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Hola");
-        System.out.println(currencyDialog.get());
         currenciesFavorite.addFavoriteCurrency(currencyDialog.get());
     }
 }
