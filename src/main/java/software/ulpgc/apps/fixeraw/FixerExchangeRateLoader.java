@@ -3,9 +3,9 @@ package software.ulpgc.apps.fixeraw;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import software.ulpgc.io.ExchangeRateLoader;
-import software.ulpgc.model.Currency;
-import software.ulpgc.model.ExchangeRate;
+import software.ulpgc.arquitecture.io.ExchangeRateLoader;
+import software.ulpgc.arquitecture.model.Currency;
+import software.ulpgc.arquitecture.model.ExchangeRate;
 
 import java.io.IOException;
 import java.io.InputStream;

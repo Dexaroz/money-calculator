@@ -1,7 +1,7 @@
 package software.ulpgc.apps.fixeraw;
 
-import software.ulpgc.io.CurrencyLoader;
-import software.ulpgc.model.Currency;
+import software.ulpgc.arquitecture.io.CurrencyLoader;
+import software.ulpgc.arquitecture.model.Currency;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

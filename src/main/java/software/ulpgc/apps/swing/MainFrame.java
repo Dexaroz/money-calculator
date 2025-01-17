@@ -1,14 +1,18 @@
 package software.ulpgc.apps.swing;
 
 import software.ulpgc.apps.fixeraw.FixerExchangeRateLoader;
-import software.ulpgc.control.AddFavoriteCurrencyCommand;
-import software.ulpgc.control.AddTransactionCommand;
-import software.ulpgc.control.CalculateCommand;
-import software.ulpgc.control.Command;
-import software.ulpgc.model.Currency;
-import software.ulpgc.model.CurrencyFavoriteRecord;
-import software.ulpgc.model.ExchangeRecord;
-import software.ulpgc.view.ContentPanelManager;
+import software.ulpgc.apps.swing.content.SwingCurrencyContent;
+import software.ulpgc.apps.swing.content.SwingFavoritiesContent;
+import software.ulpgc.apps.swing.content.SwingHistoryContent;
+import software.ulpgc.apps.swing.topMenu.SwingTopMenuComponent;
+import software.ulpgc.arquitecture.control.AddFavoriteCurrencyCommand;
+import software.ulpgc.arquitecture.control.AddTransactionCommand;
+import software.ulpgc.arquitecture.control.CalculateCommand;
+import software.ulpgc.arquitecture.control.Command;
+import software.ulpgc.arquitecture.model.Currency;
+import software.ulpgc.arquitecture.model.CurrencyFavoriteRecord;
+import software.ulpgc.arquitecture.model.ExchangeRecord;
+import software.ulpgc.arquitecture.view.ContentPanelManager;
 
 import javax.swing.*;
 import java.awt.*;
