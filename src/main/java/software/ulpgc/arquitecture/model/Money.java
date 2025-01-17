@@ -20,6 +20,6 @@ public class Money {
 
     @Override
     public String toString() {
-        return String.format("%.2f %s", amount, currency.getSymbol());
+        return String.format("%.2f", amount);
     }
 }

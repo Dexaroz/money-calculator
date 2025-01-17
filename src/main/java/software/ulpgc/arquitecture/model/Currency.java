@@ -8,7 +8,7 @@ public class Currency {
     private final String code;
     private final String symbol;
 
-    public Currency(String name, String code, String symbol) {
+    public Currency(String code, String name, String symbol) {
         this.name = name;
         this.code = code;
         this.symbol = symbol;
@@ -28,7 +28,7 @@ public class Currency {
 
     @Override
     public String toString() {
-        return String.format("%s - %s - %s", code, name, symbol);
+        return String.format("%s - %s", code, name);
     }
 
     @Override

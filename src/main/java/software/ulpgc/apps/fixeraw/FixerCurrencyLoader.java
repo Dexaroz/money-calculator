@@ -29,7 +29,7 @@ public class FixerCurrencyLoader implements CurrencyLoader {
         List<Currency> list = new ArrayList<>();
         Map<String, JsonElement> symbols = new Gson().fromJson(json, JsonObject.class).get("symbols").getAsJsonObject().asMap();
         for (String symbol : symbols.keySet()) {
-            list.add(new Currency(symbol, symbols.get(symbol).getAsString(), "pepe"));
+            list.add(new Currency(symbol, symbols.get(symbol).getAsString(), null));
         }
         return list;
     }
