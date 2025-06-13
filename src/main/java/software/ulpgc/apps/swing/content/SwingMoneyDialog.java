@@ -26,7 +26,7 @@ public class SwingMoneyDialog extends JPanel implements MoneyDialog {
 
         textField.setFont(new Font("Arial", Font.PLAIN, 12));
         textField.setForeground(Color.WHITE);
-        textField.setBackground(new Color(255,255,255));
+        textField.setBackground(new Color(44, 44, 46));
         textField.setCaretColor(Color.WHITE);
         textField.setBorder(new SwingRoundedBorder(1));
 
