@@ -1,6 +1,11 @@
-# Currency Converter
+# Money Calculator
 
-Este proyecto es una implementación de un convertidor de divisas basado en un enfoque modular y patrones arquitectónicos. A continuación, se explica la organización del código y los conceptos clave detrás de su arquitectura.
+Este proyecto es una implementación de un convertidor de divisas basado en un enfoque modular y patrones arquitectónicos. A continuación, se explica la organización del código y los conceptos clave detrás de su arquitectura.  
+
+## Ejemplo de vista:
+![image](https://github.com/user-attachments/assets/f471769c-7fc3-4225-a7a3-e4f6eb7bbc70)  
+![image](https://github.com/user-attachments/assets/420889a5-7283-4b08-89b0-055ca0d13c80)  
+![image](https://github.com/user-attachments/assets/2170181a-d8db-4763-a311-9067c641e5d8)  
 
 ## Estructura del Directorio
 
@@ -98,10 +103,5 @@ Cada componente está diseñado con una única responsabilidad. Esto mejora la m
 2. Compilar el proyecto con Maven:
    ```bash
    mvn clean install  
-
-## Ejemplo de vista:
-![image](https://github.com/user-attachments/assets/f471769c-7fc3-4225-a7a3-e4f6eb7bbc70)  
-![image](https://github.com/user-attachments/assets/420889a5-7283-4b08-89b0-055ca0d13c80)  
-![image](https://github.com/user-attachments/assets/2170181a-d8db-4763-a311-9067c641e5d8)  
 
 
