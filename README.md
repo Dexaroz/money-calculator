@@ -6,21 +6,8 @@ Este proyecto es una implementación de un convertidor de divisas basado en un e
 
 La organización del proyecto se basa en una separación de responsabilidades, agrupando componentes relacionados:
 
-currency-converter/
-├── pom.xml
-└── src/
-    └── main/
-        └── java/
-            └── software/
-                └── ulpgc/
-                    ├── apps/                     # Entrada principal y configuración de la UI.
-                    ├── arquitecture/             # Lógica principal del convertidor y gestión del modelo.
-                    │   ├── control/              # Comunicación entre la lógica y la presentación.
-                    │   ├── io/                   # Manejo de datos externos como bases de datos.
-                    │   ├── model/                # Modelo de datos del convertidor.
-                    │   ├── services/             # Lógica de negocio y funcionalidades auxiliares.
-                    │   └── view/                 # Interfaz de usuario y su representación.
-                    └── resources/                # Recursos externos como configuraciones o imágenes.
+![image](https://github.com/user-attachments/assets/e5390ebd-f854-49d4-ad30-440ecfb9e261)
+
 
   ## Patrones Arquitectónicos
 
