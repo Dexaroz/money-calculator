@@ -1,5 +1,6 @@
 package software.ulpgc.apps.swing.content;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import software.ulpgc.arquitecture.model.Currency;
 import software.ulpgc.arquitecture.view.CurrencyDialog;
 

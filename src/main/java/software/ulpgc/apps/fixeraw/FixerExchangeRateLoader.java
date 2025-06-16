@@ -1,9 +1,8 @@
 package software.ulpgc.apps.fixeraw;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import software.ulpgc.arquitecture.io.ExchangeRateLoader;
+import software.ulpgc.arquitecture.io.exchange.ExchangeRateLoader;
 import software.ulpgc.arquitecture.model.Currency;
 import software.ulpgc.arquitecture.model.ExchangeRate;
 

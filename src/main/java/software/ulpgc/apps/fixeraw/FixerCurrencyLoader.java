@@ -1,6 +1,6 @@
 package software.ulpgc.apps.fixeraw;
 
-import software.ulpgc.arquitecture.io.CurrencyLoader;
+import software.ulpgc.arquitecture.io.currency.CurrencyLoader;
 import software.ulpgc.arquitecture.model.Currency;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -29,7 +29,7 @@ public class FixerCurrencyLoader implements CurrencyLoader {
         List<Currency> list = new ArrayList<>();
         Map<String, JsonElement> symbols = new Gson().fromJson(json, JsonObject.class).get("symbols").getAsJsonObject().asMap();
         for (String symbol : symbols.keySet()) {
-            list.add(new Currency(symbol, symbols.get(symbol).getAsString(), null));
+            list.add(new Currency(symbol, symbols.get(symbol).getAsString(), null, false));
         }
         return list;
     }

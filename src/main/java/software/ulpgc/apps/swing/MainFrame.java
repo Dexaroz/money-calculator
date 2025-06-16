@@ -9,6 +9,7 @@ import software.ulpgc.arquitecture.control.AddFavoriteCurrencyCommand;
 import software.ulpgc.arquitecture.control.AddTransactionCommand;
 import software.ulpgc.arquitecture.control.CalculateCommand;
 import software.ulpgc.arquitecture.control.Command;
+import software.ulpgc.arquitecture.io.currency.DatabaseCurrencyReader;
 import software.ulpgc.arquitecture.model.Currency;
 import software.ulpgc.arquitecture.model.CurrencyFavoriteRecord;
 import software.ulpgc.arquitecture.model.ExchangeRecord;
@@ -16,9 +17,14 @@ import software.ulpgc.arquitecture.view.ContentPanelManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class MainFrame extends JFrame implements ContentPanelManager {
     private static final Color BACKGROUND_COLOR = new Color(17, 21, 24);
@@ -32,19 +38,26 @@ public class MainFrame extends JFrame implements ContentPanelManager {
     private SwingHistoryContent historyContent;
     private SwingFavoritiesContent favoritiesContent;
 
-    private ExchangeRecord exchangeRecord = new ExchangeRecord();
-    private CurrencyFavoriteRecord currencyFavorite = new CurrencyFavoriteRecord();
+    private final ExchangeRecord exchangeRecord;
+    private final CurrencyFavoriteRecord currencyFavorite;
+    private final File database;
 
-
-    public MainFrame(List<Currency> currencies) throws HeadlessException {
-        this.currencies = currencies;
+    public MainFrame(File dbFile) throws HeadlessException, SQLException, IOException {
+        this.database = dbFile;
+        this.currencies = loadCurrenciesFromDb();
         this.commands = new HashMap<>();
         this.setTitle("MoneyCalculator");
+
+        setIconLogo();
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 600);
         this.setMinimumSize(new Dimension(800,600));
         this.setLocationRelativeTo(null);
         this.setLayout(new GridBagLayout());
+
+        this.currencyFavorite = new CurrencyFavoriteRecord(this.database);
+        this.exchangeRecord = new ExchangeRecord(this.database);
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
@@ -53,6 +66,14 @@ public class MainFrame extends JFrame implements ContentPanelManager {
 
         this.showContent(getCurrencyContent());
         setUpMenuCommands();
+    }
+
+    private List<Currency> loadCurrenciesFromDb() {
+        try (DatabaseCurrencyReader databaseCurrencyReader = new DatabaseCurrencyReader(this.database)) {
+            return databaseCurrencyReader.readAll();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Component getTopMenuLabel(GridBagConstraints gridBagConstraints, SwingTopMenuComponent topMenuComponent){
@@ -83,7 +104,7 @@ public class MainFrame extends JFrame implements ContentPanelManager {
         topMenuComponent.addButton("Favorities", () -> showContent(getFavoritiesContent()));
     }
 
-    private void setUpCurrencyCommands(){
+    private void setUpCurrencyCommands() throws SQLException {
         CalculateCommand calculateCommand = new CalculateCommand(
                 currencyContent.moneyDialog(),
                 currencyContent.currencyDialog(),
@@ -108,16 +129,25 @@ public class MainFrame extends JFrame implements ContentPanelManager {
 
 
         currencyContent.setButtonAction("Calculate", e -> {
-            executeCommand("calculate");
-            executeCommand("addTransactionCommand");
+            try {
+                executeCommand("calculate");
+                executeCommand("addTransactionCommand");
+            } catch (IOException | SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
         });
 
         currencyContent.setButtonAction("Fav", e -> {
-            executeCommand("addFavoriteCurrencyCommand");
+            try {
+                executeCommand("addFavoriteCurrencyCommand");
+            } catch (IOException | SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
     }
 
-    public SwingCurrencyContent getCurrencyContent() {
+    public SwingCurrencyContent getCurrencyContent() throws SQLException {
         if (currencyContent == null) {
 
             currencyContent = SwingCurrencyContent.getInstance(currencies);
@@ -137,7 +167,7 @@ public class MainFrame extends JFrame implements ContentPanelManager {
         return SwingFavoritiesContent.getInstance(currencyFavorite);
     }
 
-    public void executeCommand(String commandKey){
+    public void executeCommand(String commandKey) throws IOException, SQLException {
         Command command = commands.get(commandKey);
         if (command != null){
             command.execute();
@@ -162,5 +192,12 @@ public class MainFrame extends JFrame implements ContentPanelManager {
 
     public CurrencyFavoriteRecord getCurrencyFavorite(){
         return currencyFavorite;
+    }
+
+    private void setIconLogo() {
+        URL imageURL = getClass().getResource("/logo.png");
+        if (imageURL != null) {
+            setIconImage(new ImageIcon(imageURL).getImage());
+        }
     }
 }

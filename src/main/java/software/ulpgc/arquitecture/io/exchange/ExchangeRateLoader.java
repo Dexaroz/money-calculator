@@ -1,4 +1,4 @@
-package software.ulpgc.arquitecture.io;
+package software.ulpgc.arquitecture.io.exchange;
 
 import software.ulpgc.arquitecture.model.Currency;
 import software.ulpgc.arquitecture.model.ExchangeRate;

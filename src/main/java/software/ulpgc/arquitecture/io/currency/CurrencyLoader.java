@@ -1,4 +1,4 @@
-package software.ulpgc.arquitecture.io;
+package software.ulpgc.arquitecture.io.currency;
 
 import software.ulpgc.arquitecture.model.Currency;
 

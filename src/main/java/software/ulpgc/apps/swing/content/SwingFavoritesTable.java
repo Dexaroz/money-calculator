@@ -14,7 +14,7 @@ public class SwingFavoritesTable extends JTable {
 
     private static class ExchangeTableModel extends AbstractTableModel {
         private final List<Currency> currencyFavorites;
-        private final String[] columnNames = {"Name", "Code", "Symbol"};
+        private final String[] columnNames = {"Name", "Code"};
 
         public ExchangeTableModel(List<Currency> currencyFavorites) {
             this.currencyFavorites = currencyFavorites;
@@ -41,7 +41,6 @@ public class SwingFavoritesTable extends JTable {
             switch (columnIndex) {
                 case 0: return currency.getName();
                 case 1: return currency.getCode();
-                case 2: return currency.getSymbol();
                 default: return null;
             }
         }

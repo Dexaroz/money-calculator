@@ -1,8 +1,9 @@
-package software.ulpgc.arquitecture.io;
+package software.ulpgc.arquitecture.io.exchange;
 
+import software.ulpgc.arquitecture.io.currency.CurrencyLookup;
 import software.ulpgc.arquitecture.model.ExchangeRate;
 
-public class JsonExchangeRateDeserializer implements ExchangeRateDeserializer{
+public class JsonExchangeRateDeserializer implements ExchangeRateDeserializer {
     private final CurrencyLookup lookup;
 
     public JsonExchangeRateDeserializer(CurrencyLookup lookup) {

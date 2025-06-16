@@ -1,4 +1,4 @@
-package software.ulpgc.arquitecture.io;
+package software.ulpgc.arquitecture.io.currency;
 
 import software.ulpgc.arquitecture.model.Currency;
 
@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileCurrencyLoader implements CurrencyLoader{
+public class FileCurrencyLoader implements CurrencyLoader {
     private final File file;
     private final CurrencyDeserializer deserializer;
 

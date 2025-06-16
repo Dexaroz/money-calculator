@@ -1,4 +1,4 @@
-package software.ulpgc.arquitecture.io;
+package software.ulpgc.arquitecture.io.currency;
 
 import software.ulpgc.arquitecture.model.Currency;
 
@@ -9,6 +9,6 @@ public class TsvCurrencyDeserializer implements CurrencyDeserializer {
     }
 
     private Currency deserialize(String[] fields) {
-        return new Currency(fields[0], fields[1], fields[2]);
+        return new Currency(fields[0], fields[1], fields[2], false);
     }
 }

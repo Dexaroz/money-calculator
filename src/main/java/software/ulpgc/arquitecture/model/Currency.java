@@ -7,11 +7,13 @@ public class Currency {
     private final String name;
     private final String code;
     private final String symbol;
+    private final boolean favority;
 
-    public Currency(String code, String name, String symbol) {
+    public Currency(String code, String name, String symbol, boolean favority) {
         this.name = name;
         this.code = code;
         this.symbol = symbol;
+        this.favority = favority;
     }
 
     public String getName() {
@@ -24,6 +26,14 @@ public class Currency {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    public boolean getFavority() {
+        return favority;
+    }
+
+    public Currency setFavority(){
+        return new Currency(this.code, this.name, this.symbol, true);
     }
 
     @Override

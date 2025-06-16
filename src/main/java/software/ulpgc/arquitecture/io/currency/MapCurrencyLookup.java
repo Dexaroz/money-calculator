@@ -1,4 +1,4 @@
-package software.ulpgc.arquitecture.io;
+package software.ulpgc.arquitecture.io.currency;
 
 import software.ulpgc.arquitecture.model.Currency;
 
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapCurrencyLookup implements CurrencyLookup{
+public class MapCurrencyLookup implements CurrencyLookup {
 
     private final Map<String, Currency> map;
 

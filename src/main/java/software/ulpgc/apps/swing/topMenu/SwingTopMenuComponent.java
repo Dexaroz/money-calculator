@@ -7,7 +7,9 @@ import software.ulpgc.arquitecture.view.VisualComponent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +57,13 @@ public class SwingTopMenuComponent extends JPanel implements VisualComponent, To
     public void addButton(String label, Command command) {
         if (!buttons.containsKey(label)){
             JButton button = createButton(label);
-            button.addActionListener(e -> command.execute());
+            button.addActionListener(e -> {
+                try {
+                    command.execute();
+                } catch (IOException | SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
             buttons.put(label, button);
             horizontalMenu.add(button);
         }
@@ -68,7 +76,13 @@ public class SwingTopMenuComponent extends JPanel implements VisualComponent, To
             for (ActionListener al : button.getActionListeners()) {
                 button.removeActionListener(al);
             }
-            button.addActionListener(e -> command.execute());
+            button.addActionListener(e -> {
+                try {
+                    command.execute();
+                } catch (IOException | SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
         }
     }
 }
