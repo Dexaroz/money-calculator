@@ -1,26 +1,113 @@
-# Proyecto Money Calculator
+# Currency Converter
 
-Este proyecto es una aplicación de escritorio para la conversión de divisas, construida con un enfoque modular y patrones arquitectónicos. A continuación, se explica la organización del código y los conceptos clave detrás de su arquitectura.
-
----
+Este proyecto es una implementación de un convertidor de divisas basado en un enfoque modular y patrones arquitectónicos. A continuación, se explica la organización del código y los conceptos clave detrás de su arquitectura.
 
 ## Estructura del Directorio
 
-La organización del proyecto se basa en la separación de responsabilidades, agrupando componentes relacionados por función:
+La organización del proyecto se basa en una separación de responsabilidades, agrupando componentes relacionados:
 
-money-calculator/
+currency-converter/
 ├── pom.xml
 └── src/
-└── main/
-└── java/
-└── software/
-└── ulpgc/
-  └── apps/
-    └── swing/ # Interfaz gráfica principal de usuario.
-  └── arquitecture/
-    ├── control/ # Comandos que gestionan acciones de usuario.
-    ├── io/ # Manejo de la base de datos y datos externos.
-    ├── model/ # Modelo de datos de la aplicación.
-    ├── view/ # Manejo de la vista.
-    
-    
+    └── main/
+        └── java/
+            └── software/
+                └── ulpgc/
+                    ├── apps/                     # Entrada principal y configuración de la UI.
+                    ├── arquitecture/             # Lógica principal del convertidor y gestión del modelo.
+                    │   ├── control/              # Comunicación entre la lógica y la presentación.
+                    │   ├── io/                   # Manejo de datos externos como bases de datos.
+                    │   ├── model/                # Modelo de datos del convertidor.
+                    │   ├── services/             # Lógica de negocio y funcionalidades auxiliares.
+                    │   └── view/                 # Interfaz de usuario y su representación.
+                    └── resources/                # Recursos externos como configuraciones o imágenes.
+
+  ## Patrones Arquitectónicos
+
+### Modelo-Vista-Controlador (MVC)
+
+La arquitectura general del proyecto sigue este enfoque, separando las responsabilidades en tres capas:
+
+- **Modelo**:
+  - Define los datos y la lógica del convertidor.
+  - Contiene clases para representar transacciones, divisas y registros de intercambio.
+  - Ejemplo: `ExchangeRecord`, `ExchangeTransaction`, `Currency`.
+
+- **Vista**:
+  - Gestiona la presentación visual.
+  - Proporciona componentes para mostrar las transacciones, seleccionar divisas y otros elementos de la UI.
+  - Ejemplo: `SwingMoneyDialog`, `SwingCurrencyDialog`, `SwingMoneyDisplay`.
+
+- **Controlador**:
+  - Media entre el modelo y la vista, actuando como coordinador.
+  - Gestiona eventos de usuario, actualiza el modelo y notifica a la vista.
+  - Ejemplo: `AddTransactionCommand`, `CalculateCommand`.
+
+### Patrón Comando
+
+Se utiliza para encapsular solicitudes como objetos, permitiendo la ejecución de comandos sin conocer sus detalles. Este enfoque simplifica la ejecución y modificación de acciones.
+
+- Implementado en: `Command`, `AddTransactionCommand`, `CalculateCommand`.
+
+### Patrón Observador
+
+Permite la comunicación reactiva entre componentes. Se utiliza para que el modelo notifique cambios relevantes, como nuevas transacciones o actualizaciones de divisas, a los observadores interesados.
+
+- Implementado en: `Observer`, `ExchangeRecordObserver`.
+
+### Patrón Singleton
+
+Garantiza que ciertas funcionalidades compartidas solo tengan una instancia global en toda la aplicación, como el registro de transacciones.
+
+- Implementado en: `SwingFavoritiesContent`.
+
+## Servicios Auxiliares
+
+Encapsulan funcionalidades específicas para facilitar el mantenimiento y la reutilización del código:
+
+- **Gestión de transacciones**:
+  - Registro y almacenamiento de transacciones en una base de datos.
+  - Implementado en: `DatabaseExchangeTransactionWriter`, `DatabaseExchangeTransactionReader`.
+
+- **Gestión de divisas**:
+  - Lectura de divisas desde una base de datos.
+  - Implementado en: `DatabaseCurrencyReader`.
+
+- **Cálculo de conversiones**:
+  - Implementado en: `CalculateCommand`.
+
+## Modularidad
+
+Cada componente está diseñado con una única responsabilidad. Esto mejora la mantenibilidad y escalabilidad del proyecto. Por ejemplo:
+
+- **Módulo de entrada/salida**:
+  - Manejo de datos externos como bases de datos (`DatabaseCurrencyReader`, `DatabaseExchangeTransactionWriter`).
+
+- **Módulo del modelo**:
+  - Representación de entidades centrales (`Currency`, `ExchangeTransaction`, `ExchangeRecord`).
+
+- **Módulo de la vista**:
+  - Interfaz visual (`SwingMoneyDialog`, `SwingCurrencyDialog`, `SwingMoneyDisplay`).
+
+## Ejemplo de Flujo
+
+1. El usuario interactúa con la UI para seleccionar una divisa y un monto.
+2. El controlador recibe la acción y crea una nueva transacción basada en los datos ingresados.
+3. La vista se actualiza para reflejar el nuevo estado del modelo.
+4. Durante el proceso de conversión:
+   - Se consulta y actualiza el modelo.
+   - La vista muestra los cambios en tiempo real.
+   - Los observadores verifican si se han registrado correctamente las transacciones.
+
+## Tecnologías Utilizadas
+
+- **Java Swing**: Para la interfaz gráfica.
+- **Maven**: Gestión de dependencias y configuración del proyecto.
+- **Java 17**: Versión requerida para ejecutar el proyecto.
+
+## Configuración y Ejecución
+
+1. Clonar el repositorio.
+2. Compilar el proyecto con Maven:
+   ```bash
+   mvn clean install
